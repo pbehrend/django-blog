@@ -33,7 +33,7 @@ class BlogListView(ListView):
 class BlogDetailView(DetailView):
     model = Post
     template_name = 'blogging/detail.html'
-    context_object_name = 'post'
+    queryset = Post.objects.exclude(published_date__exact=None)
     
 #def detail_view(request, post_id):
 #    published = Post.objects.exclude(published_date__exact=None)
