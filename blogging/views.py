@@ -7,35 +7,40 @@ from blogging.models import Post
 
 
 def stub_view(request, *args, **kwargs):
-    body = 'Stub View\n\n'
+    body = "Stub View\n\n"
     if args:
         body += "Args:\n"
-        body += "\n".join(['\t%s' % a for a in args])
+        body += "\n".join(["\t%s" % a for a in args])
     if kwargs:
         body += "Kwargs:\n"
-        body += "\n".join(['\t%s: %s' % k for k in kwargs.items()])
-    return HttpResponse(body, content_type='text/plain')
+        body += "\n".join(["\t%s: %s" % k for k in kwargs.items()])
+    return HttpResponse(body, content_type="text/plain")
 
 
 def list_view(request):
     published = Post.objects.exclude(published_date__exact=None)
-    posts = published.order_by('-published_date')
+    posts = published.order_by("-published_date")
     # template = loader.get_template('blogging/list.html')
     # body = template.render(context)
-    context = {'posts': posts}
-    return render(request, 'blogging/list.html', context)
+    context = {"posts": posts}
+    return render(request, "blogging/list.html", context)
+
 
 class BlogListView(ListView):
     model = Post
-    template_name = 'blogging/list.html'
-    queryset = Post.objects.order_by('-published_date').exclude(published_date__exact=None)
+    template_name = "blogging/list.html"
+    queryset = Post.objects.order_by("-published_date").exclude(
+        published_date__exact=None
+    )
+
 
 class BlogDetailView(DetailView):
     model = Post
-    template_name = 'blogging/detail.html'
+    template_name = "blogging/detail.html"
     queryset = Post.objects.exclude(published_date__exact=None)
-    
-#def detail_view(request, post_id):
+
+
+# def detail_view(request, post_id):
 #    published = Post.objects.exclude(published_date__exact=None)
 #    try:
 #        post = published.get(pk=post_id)
@@ -43,4 +48,3 @@ class BlogDetailView(DetailView):
 #        raise Http404
 #    context = {'post': post}
 #    return render(request, 'blogging/detail.html', context)
-
