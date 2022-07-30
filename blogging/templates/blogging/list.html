@@ -5,7 +5,7 @@
 {% comment %} here is where query executes {% endcomment %}
 {% for post in object_list %} 
 <div class="post">
-    <h2>{{ post }}
+    <h2>
       <a href="{% url 'blog_detail' post.pk %}">{{ post }}</a>
         </h2>
     <p class="byline">
